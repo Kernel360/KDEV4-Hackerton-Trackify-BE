@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Task {
+public class TaskEntity {
     @Id @GeneratedValue
     @Column(name = "task_sequence")
     private Long id;
@@ -30,8 +30,8 @@ public class Task {
     private Integer status;
 
     //==Task 생성 메서드==//
-    public static Task createTask(String title, LocalDate start_date, LocalDate end_date) {
-        Task task = new Task();
+    public static TaskEntity createTask(String title, LocalDate start_date, LocalDate end_date) {
+        TaskEntity task = new TaskEntity();
 
         task.setTitle(title);
         task.setStartDate(start_date);
