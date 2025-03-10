@@ -12,12 +12,3 @@ spring:
 #    username: root
 #    password: root1234!
 
-    datasource:
-      url : jdbc:mysql://3.34.1.91:3306?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
-      dirver-class-name: com.mysql.cj.jdbc.Driver
-      username: JK
-      password: 1111
-    jpa:
-      database: mysql
-      generate-ddl: true
-      show-sql: true
