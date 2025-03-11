@@ -1,4 +1,4 @@
-package com.example.trackify.task.controller;
+package com.example.trackify.task.api;
 
 import com.example.trackify.task.domain.Task;
 import com.example.trackify.task.domain.TaskForm;
@@ -59,7 +59,7 @@ public class TaskController {
     }
 
     //태스크 수정
-    @PatchMapping("/tasks/{task_sequence}")
+    @PatchMapping("/tasks/{task_sequence}/modify")
     public ResponseEntity<Map<String, String>> updateTask(
             @RequestBody TaskForm form,
             @PathVariable Long taskSequence
@@ -76,7 +76,7 @@ public class TaskController {
     }
 
     //태스크 상태 변경
-    @PatchMapping("/tasks/{task_sequence}")
+    @PatchMapping("/tasks/{task_sequence}/status")
     public ResponseEntity<Map<String, String>> updateTaskStatus(
             @RequestBody TaskStatus taskStatus,
             @PathVariable Long taskSequence
@@ -89,7 +89,7 @@ public class TaskController {
     }
 
     //태스크 삭제
-    @DeleteMapping("/tasks/{task_sequence}")
+    @DeleteMapping("/tasks/{task_sequence}/delete")
     public ResponseEntity<Map<String, String>> deleteTask(
             @PathVariable Long taskSequence
     ) {

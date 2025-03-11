@@ -1,4 +1,4 @@
-package com.example.trackify.todo.controller;
+package com.example.trackify.todo.api;
 
 import com.example.trackify.todo.domain.Todo;
 import com.example.trackify.todo.service.TodoService;

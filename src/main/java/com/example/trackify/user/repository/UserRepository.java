@@ -1,6 +1,6 @@
-package com.example.trackify.user.domain.repository;
+package com.example.trackify.user.repository;
 
-import com.example.trackify.user.domain.entity.User;
+import com.example.trackify.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

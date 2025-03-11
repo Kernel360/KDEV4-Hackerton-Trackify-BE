@@ -1,7 +1,7 @@
-package com.example.trackify.user.domain.controller;
+package com.example.trackify.user.api;
 
-import com.example.trackify.user.domain.entity.User;
-import com.example.trackify.user.domain.service.UserService;
+import com.example.trackify.user.domain.User;
+import com.example.trackify.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

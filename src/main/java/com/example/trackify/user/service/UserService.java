@@ -1,7 +1,7 @@
-package com.example.trackify.user.domain.service;
+package com.example.trackify.user.service;
 
-import com.example.trackify.user.domain.entity.User;
-import com.example.trackify.user.domain.repository.UserRepository;
+import com.example.trackify.user.domain.User;
+import com.example.trackify.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
