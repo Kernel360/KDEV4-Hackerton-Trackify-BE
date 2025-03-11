@@ -2,6 +2,7 @@ package com.example.trackify.task.controller;
 
 import com.example.trackify.task.domain.Task;
 import com.example.trackify.task.domain.TaskForm;
+import com.example.trackify.task.domain.TaskStatus;
 import com.example.trackify.task.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -71,17 +72,17 @@ public class TaskController {
         taskService.update(taskSequence, taskTitle, taskStartDate, taskEndDate);
 
         Map<String, String> res = new HashMap<>();
-        res.put("message", "태스크 상태 변경 완료");
+        res.put("message", "태스크 수정 완료");
         return ResponseEntity.ok(res);
     }
 
     //태스크 상태 변경
-    @PatchMapping("/tasks/{task_sequence")
+    @PatchMapping("/tasks/{task_sequence}")
     public ResponseEntity<Map<String, String>> updateTaskStatus(
-            @RequestBody Integer taskStatus,
+            @RequestBody TaskStatus taskStatus,
             @PathVariable BigInteger taskSequence
     ){
-        taskService.updateStatus(taskSequence, taskStatus);
+        taskService.updateStatus(taskSequence, taskStatus.getValue());
 
         Map<String, String> res = new HashMap<>();
         res.put("message", "태스크 상태 변경 완료");
