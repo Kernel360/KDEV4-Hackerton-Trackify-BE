@@ -30,7 +30,7 @@ public class CategoryApiController {
         return categoryService.updateCategory(categorySequence,category);
     }
     //카테고리 상태 변경
-    @PatchMapping("/{categorySequence}")
+    @PatchMapping("/status/{categorySequence}")
     public Category updateCategoryStatus(
             @PathVariable Long categorySequence,
             @RequestBody Category category

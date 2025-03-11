@@ -24,6 +24,7 @@ public class Task {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Builder.Default
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 
