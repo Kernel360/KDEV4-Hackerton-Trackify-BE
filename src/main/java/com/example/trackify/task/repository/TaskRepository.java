@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -16,16 +18,33 @@ public class TaskRepository {
         em.persist(task);
     }
 
-    public Task findOne(Long id) {
-        return em.find(Task.class, id);
+    public Task findOne(BigInteger taskSequence) {
+        return em.find(Task.class, taskSequence);
     }
 
     public List<Task> findAll() {
-        return em.createQuery("select t from Task m", Task.class).getResultList();
+        return em.createQuery("select t from Task t", Task.class).getResultList();
     }
 
-    public List<Task> findByTitle(String title) {
-        return em.createQuery("select t from Task t where t.title = :title", Task.class).setParameter("title", title).getResultList();
+    public void update(BigInteger taskSequence, String taskTitle, LocalDate taskStartDate, LocalDate taskEndDate){
+        em.createQuery("update Task t set t.taskTitle = :title, t.taskStartDate = :startDate, t.taskEndDate = :endDate where t.taskSequence = :sequence", Task.class)
+                .setParameter("title", taskTitle)
+                .setParameter("startDate", taskStartDate)
+                .setParameter("endDate", taskEndDate)
+                .setParameter("sequence", taskSequence)
+                .executeUpdate();
     }
 
+    public void updateStatus(BigInteger taskSequence, Integer taskStatus){
+        em.createQuery("update Task t set t.taskStatus = :status where t.taskSequence = :sequence", Task.class)
+                .setParameter("status", taskStatus)
+                .setParameter("sequence", taskSequence)
+                .executeUpdate();
+    }
+
+    public void delete(BigInteger taskSequence){
+        em.createQuery("delete from Task t where t.taskSequence = :sequence", Task.class)
+                .setParameter("sequence", taskSequence)
+                .executeUpdate();
+    }
 }

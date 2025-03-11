@@ -19,13 +19,13 @@ import java.util.List;
 public class Task {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_sequence")
-    private BigInteger taskId;
+    private BigInteger taskSequence;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "category_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 
     @Column(name = "task_title")
