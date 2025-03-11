@@ -1,4 +1,4 @@
-package com.example.trackify.category.controller;
+package com.example.trackify.category.api;
 
 import com.example.trackify.category.domain.Category;
 import com.example.trackify.category.service.CategoryService;
