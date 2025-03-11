@@ -1,10 +1,14 @@
 package com.example.trackify.task.domain;
 
+import com.example.trackify.category.domain.Category;
+import com.example.trackify.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,34 +17,27 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Table(name = "task")
 public class Task {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_sequence")
-    private BigInteger TaskId;
+    private BigInteger taskId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "category_id", cascade = CascadeType.ALL)
+    private List<Category> categories = new ArrayList<>();
+
     @Column(name = "task_title")
-    private String TaskTitle;
+    private String taskTitle;
 
     @Column(name = "task_start_date")
-    private LocalDate TaskStartDate;
+    private LocalDate taskStartDate;
 
     @Column(name = "task_end_date")
-    private LocalDate TaskEndDate;
+    private LocalDate taskEndDate;
 
     @Column(name = "task_status")
-    private Integer TaskStatus;
-
-    //==Task 생성 메서드==//
-    public static Task createTask(String title, LocalDate start_date, LocalDate end_date) {
-        Task task = new Task();
-
-        task.setTaskTitle(title);
-        task.setTaskStartDate(start_date);
-        task.setTaskEndDate(end_date);
-
-        return task;
-    }
+    @Enumerated(EnumType.ORDINAL)
+    private TaskStatus taskStatus;
 }

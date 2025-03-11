@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class TaskService {
 
