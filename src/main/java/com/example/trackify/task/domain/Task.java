@@ -5,7 +5,6 @@ import com.example.trackify.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.List;
 public class Task {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_sequence")
-    private BigInteger taskSequence;
+    private Long taskSequence;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

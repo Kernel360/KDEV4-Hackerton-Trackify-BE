@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +22,7 @@ public class TaskController {
 
     //태스크 생성
     @PostMapping("/tasks/new")
-    public ResponseEntity<Map<BigInteger, String>> createTask(
+    public ResponseEntity<Map<Long, String>> createTask(
             @RequestBody TaskForm form
     ) {
         //Task 엔티티 생성
@@ -37,7 +36,7 @@ public class TaskController {
         taskService.save(task);
 
         //응답을 Map -> JSON 형태로 반환
-        Map<BigInteger, String> res = new HashMap<>();
+        Map<Long, String> res = new HashMap<>();
         res.put(task.getTaskSequence(), "태스크 등록 완료");
 
         return ResponseEntity.ok(res);
@@ -53,7 +52,7 @@ public class TaskController {
     //태스크 상세 조회
     @GetMapping("/tasks/{task_sequence}")
     public ResponseEntity<Task> getDetailTask(
-            @PathVariable BigInteger taskSequence
+            @PathVariable Long taskSequence
     ) {
         Task res = taskService.findOne(taskSequence);
         return ResponseEntity.ok(res);
@@ -63,7 +62,7 @@ public class TaskController {
     @PatchMapping("/tasks/{task_sequence}")
     public ResponseEntity<Map<String, String>> updateTask(
             @RequestBody TaskForm form,
-            @PathVariable BigInteger taskSequence
+            @PathVariable Long taskSequence
     ) {
         String taskTitle = form.getTaskTitle();
         LocalDate taskStartDate = form.getTaskStartDate();
@@ -80,7 +79,7 @@ public class TaskController {
     @PatchMapping("/tasks/{task_sequence}")
     public ResponseEntity<Map<String, String>> updateTaskStatus(
             @RequestBody TaskStatus taskStatus,
-            @PathVariable BigInteger taskSequence
+            @PathVariable Long taskSequence
     ){
         taskService.updateStatus(taskSequence, taskStatus.getValue());
 
@@ -92,7 +91,7 @@ public class TaskController {
     //태스크 삭제
     @DeleteMapping("/tasks/{task_sequence}")
     public ResponseEntity<Map<String, String>> deleteTask(
-            @PathVariable BigInteger taskSequence
+            @PathVariable Long taskSequence
     ) {
 
         taskService.delete(taskSequence);

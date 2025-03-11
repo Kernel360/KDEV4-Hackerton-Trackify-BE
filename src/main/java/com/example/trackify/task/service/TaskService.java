@@ -5,7 +5,6 @@ import com.example.trackify.task.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,28 +31,28 @@ public class TaskService {
     /**
      * 태스크 상세 조회
      */
-    public Task findOne(BigInteger taskSequence) {
+    public Task findOne(Long taskSequence) {
         return taskRepository.findOne(taskSequence);
     }
 
     /**
      * 태스크 수정 (이름, 시작일, 종료일)
      */
-    public void update(BigInteger taskSequence, String taskTitle, LocalDate taskStartDate, LocalDate taskEndDate) {
+    public void update(Long taskSequence, String taskTitle, LocalDate taskStartDate, LocalDate taskEndDate) {
         taskRepository.update(taskSequence, taskTitle, taskStartDate, taskEndDate);
     }
 
     /**
      * 태스크 상태 변경
      */
-    public void updateStatus(BigInteger taskSequence, Integer taskStatus) {
+    public void updateStatus(Long taskSequence, Integer taskStatus) {
         taskRepository.updateStatus(taskSequence, taskStatus);
     }
 
     /**
      * 태스크 삭제
      */
-    public void delete(BigInteger taskSequence) {
+    public void delete(Long taskSequence) {
         taskRepository.delete(taskSequence);
     }
 }
