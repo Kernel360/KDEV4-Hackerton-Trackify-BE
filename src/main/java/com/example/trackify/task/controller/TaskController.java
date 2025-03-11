@@ -2,13 +2,14 @@ package com.example.trackify.task.controller;
 
 import com.example.trackify.task.domain.Task;
 import com.example.trackify.task.domain.TaskForm;
+import com.example.trackify.task.domain.TaskStatus;
 import com.example.trackify.task.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +34,11 @@ public class TaskController {
                 .build();
 
         //Task 서비스에서 저장
-        taskService.saveTask(task);
+        taskService.save(task);
 
         //응답을 Map -> JSON 형태로 반환
         Map<BigInteger, String> res = new HashMap<>();
-        res.put(task.getTaskId(), "태스크 등록 완료");
+        res.put(task.getTaskSequence(), "태스크 등록 완료");
 
         return ResponseEntity.ok(res);
     }
@@ -45,8 +46,7 @@ public class TaskController {
     //태스크 목록 조회
     @GetMapping("/tasks/all")
     public ResponseEntity<List<Task>> showAllTasks() {
-        taskService.findAllTasks();
-        List<Task> res = new ArrayList<>();
+        List<Task> res = taskService.findAll().stream().toList();
         return ResponseEntity.ok(res);
     }
 
@@ -55,17 +55,34 @@ public class TaskController {
     public ResponseEntity<Task> getDetailTask(
             @PathVariable BigInteger taskSequence
     ) {
-        taskService.findOneTask(BigInteger taskSequence);
-
+        Task res = taskService.findOne(taskSequence);
+        return ResponseEntity.ok(res);
     }
 
     //태스크 수정
     @PatchMapping("/tasks/{task_sequence}")
     public ResponseEntity<Map<String, String>> updateTask(
-            @RequestBody TaskForm task,
+            @RequestBody TaskForm form,
             @PathVariable BigInteger taskSequence
     ) {
-        taskService.updateTask(BigInteger taskSequence);
+        String taskTitle = form.getTaskTitle();
+        LocalDate taskStartDate = form.getTaskStartDate();
+        LocalDate taskEndDate = form.getTaskEndDate();
+
+        taskService.update(taskSequence, taskTitle, taskStartDate, taskEndDate);
+
+        Map<String, String> res = new HashMap<>();
+        res.put("message", "태스크 수정 완료");
+        return ResponseEntity.ok(res);
+    }
+
+    //태스크 상태 변경
+    @PatchMapping("/tasks/{task_sequence}")
+    public ResponseEntity<Map<String, String>> updateTaskStatus(
+            @RequestBody TaskStatus taskStatus,
+            @PathVariable BigInteger taskSequence
+    ){
+        taskService.updateStatus(taskSequence, taskStatus.getValue());
 
         Map<String, String> res = new HashMap<>();
         res.put("message", "태스크 상태 변경 완료");
@@ -78,7 +95,7 @@ public class TaskController {
             @PathVariable BigInteger taskSequence
     ) {
 
-        taskService.deleteTask(BigInteger taskSequence);
+        taskService.delete(taskSequence);
 
         Map<String, String> res = new HashMap<>();
         res.put("message", "태스크 삭제 완료");

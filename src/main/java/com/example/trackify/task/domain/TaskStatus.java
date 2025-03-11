@@ -10,4 +10,8 @@ public enum TaskStatus {
     TaskStatus(int value) {
         this.value = value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
