@@ -18,31 +18,38 @@ public class CategoryService {
     private final TaskRepository taskRepository;
 
     //카테고리 생성
-    public Category createCategory(Long task_sequence, Category category){
-        Task task = taskRepository.findOne(task_sequence);
+    public Category createCategory(Long taskSequence, Category category){
+        Task task = taskRepository.findOne(taskSequence);
 
         category.setTask(task);
         return categoryRepository.save(category);
     }
+    //카테고리 조회
+    public Optional<Category> findById(Long categorySequence){
+        return categoryRepository.findById(categorySequence);
+    }
+    public List<Category> findAll(){
+        return categoryRepository.findAll();
+    }
 
     //카테고리 수정
-    public Category updateCategory(Long category_sequence,Category category){
-        Optional<Category> savedCategory = categoryRepository.findById(category_sequence);
+    public Category updateCategory(Long categorySequence,Category category){
+        Optional<Category> savedCategory = categoryRepository.findById(categorySequence);
         savedCategory.get().setCategoryName(category.getCategoryName());
         savedCategory.get().setCategoryGoalTime(category.getCategoryGoalTime());
         return categoryRepository.save(savedCategory.get());
     }
 
     //카테고리 상태 변경
-    public Category updateCategoryStatus(Long category_sequence,Category category) {
-        Optional<Category> savedCategory = categoryRepository.findById(category_sequence);
+    public Category updateCategoryStatus(Long categorySequence,Category category) {
+        Optional<Category> savedCategory = categoryRepository.findById(categorySequence);
         savedCategory.get().setCategoryStatus(category.getCategoryStatus());
         return categoryRepository.save(savedCategory.get());
     }
 
     //카테고리 삭제
-    public void deleteCategory(Long category_sequence){
-        Optional<Category> category = categoryRepository.findById(category_sequence);
+    public void deleteCategory(Long categorySequence){
+        Optional<Category> category = categoryRepository.findById(categorySequence);
         categoryRepository.delete(category.get());
     }
 }
