@@ -1,7 +1,7 @@
 package com.example.trackify.task.domain;
 
 import com.example.trackify.category.domain.Category;
-import com.example.trackify.user.domain.User;
+import com.example.trackify.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

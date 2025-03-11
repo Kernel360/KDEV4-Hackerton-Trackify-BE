@@ -24,7 +24,7 @@ public class TodoApiController {
         return todoService.createTodo(categorySequence,todo);
     }
     //Todo 상세 조회
-    @GetMapping("")
+    @GetMapping("/{todo}")
     public Optional<Todo> findById(
             @PathVariable Long todoSequence
     ){
@@ -44,7 +44,7 @@ public class TodoApiController {
         return todoService.updateTodo(todoSequence,todo);
     }
     //Todo 상태 변경
-    @PatchMapping("/{todo_sequence}")
+    @PatchMapping("/status/{todo_sequence}")
     public Todo updateTodoStatus(
             @PathVariable Long todoSequence,
             @RequestBody Boolean todoStatus){

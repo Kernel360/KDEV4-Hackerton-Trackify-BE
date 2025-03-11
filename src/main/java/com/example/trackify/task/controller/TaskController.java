@@ -76,7 +76,7 @@ public class TaskController {
     }
 
     //태스크 상태 변경
-    @PatchMapping("/tasks/{task_sequence}")
+    @PatchMapping("/tasks/status/{task_sequence}")
     public ResponseEntity<Map<String, String>> updateTaskStatus(
             @RequestBody TaskStatus taskStatus,
             @PathVariable Long taskSequence
