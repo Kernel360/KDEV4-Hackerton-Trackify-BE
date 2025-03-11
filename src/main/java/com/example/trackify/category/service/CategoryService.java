@@ -25,7 +25,12 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
     //카테고리 조회
-    public Category findById(Long categorySequence)
+    public Optional<Category> findById(Long categorySequence){
+        return categoryRepository.findById(categorySequence);
+    }
+    public List<Category> findAll(){
+        return categoryRepository.findAll();
+    }
 
     //카테고리 수정
     public Category updateCategory(Long categorySequence,Category category){
