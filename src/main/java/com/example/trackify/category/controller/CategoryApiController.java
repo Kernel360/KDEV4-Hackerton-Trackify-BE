@@ -15,34 +15,33 @@ public class CategoryApiController {
     //카테고리 생성
     @PostMapping("")
     public Category createCategory(
-            @PathVariable Long task_sequence,
+            @PathVariable Long taskSequence,
             @RequestBody Category category
     ){
-        return categoryService.createCategory(task_sequence,category);
+        return categoryService.createCategory(taskSequence,category);
     }
 
     //카테고리 수정
     @PatchMapping("/{category_sequence}")
     public Category updateCategory(
-            @PathVariable Long task_sequence,
-            @PathVariable Long category_sequence,
+            @PathVariable Long categorySequence,
             @RequestBody Category category
     ){
-        return categoryService.updateCategory(category_sequence,category);
+        return categoryService.updateCategory(categorySequence,category);
     }
     //카테고리 상태 변경
-    @PatchMapping("/{category_sequence}")
+    @PatchMapping("/{categorySequence}")
     public Category updateCategoryStatus(
-            @PathVariable Long category_sequence,
+            @PathVariable Long categorySequence,
             @RequestBody Category category
     ){
-        return categoryService.updateCategoryStatus(category_sequence,category);
+        return categoryService.updateCategoryStatus(categorySequence,category);
     }
     //카테고리 삭제
-    @DeleteMapping("/{category_sequence}")
+    @DeleteMapping("/{categorySequence}")
     public void deleteCategory(
-            @PathVariable Long category_sequence
+            @PathVariable Long categorySequence
     ){
-        categoryService.deleteCategory(category_sequence);
+        categoryService.deleteCategory(categorySequence);
     }
 }
