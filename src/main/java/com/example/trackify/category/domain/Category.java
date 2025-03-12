@@ -29,7 +29,8 @@ public class Category {
     private Integer categoryRecordTime;
 
     @Enumerated(EnumType.ORDINAL)
-    private CategoryStatus categoryStatus;
+    @Builder.Default
+    private CategoryStatus categoryStatus = CategoryStatus.IN_PROGRESS;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference

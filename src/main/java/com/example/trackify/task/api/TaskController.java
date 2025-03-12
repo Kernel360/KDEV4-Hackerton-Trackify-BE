@@ -31,6 +31,9 @@ public class TaskController {
     ) {
         //User
         User user = (User) session.getAttribute("user");
+        if (user == null) {
+            throw new RuntimeException("세션에 유저 정보가 없습니다.");
+        }
         //Task 엔티티 생성
         Task task = Task.builder()
                 .taskTitle(form.getTaskTitle())
