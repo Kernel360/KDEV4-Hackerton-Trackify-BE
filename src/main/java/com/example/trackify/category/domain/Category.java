@@ -2,6 +2,8 @@ package com.example.trackify.category.domain;
 
 import com.example.trackify.task.domain.Task;
 import com.example.trackify.todo.domain.Todo;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,11 +31,13 @@ public class Category {
     @Enumerated(EnumType.ORDINAL)
     private CategoryStatus categoryStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "task_sequence", nullable = false)
     private Task task;
 
     @Builder.Default
+    @JsonManagedReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Todo> todos = new ArrayList<>();
 }

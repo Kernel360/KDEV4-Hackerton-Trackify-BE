@@ -14,4 +14,13 @@ public enum TaskStatus {
     public int getValue() {
         return value;
     }
+
+    public static TaskStatus fromValue(int value) {
+        for (TaskStatus status : values()) {
+            if (status.getValue() == value) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("Invalid TaskStatus value: " + value);
+    }
 }
