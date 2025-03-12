@@ -23,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://3.37.130.205:3000")  // React 배포 URL
+                //.allowedOriginPatterns("http://localhost:3000")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 허용할 HTTP 메서드
                 .allowCredentials(true) // 세션 & 쿠키 허용
                 .allowedHeaders("*"); // 모든 헤더 허용
