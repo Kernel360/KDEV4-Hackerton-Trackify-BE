@@ -13,4 +13,8 @@ public enum TodoStatus {
     public boolean getValue() {
         return value;
     }
+
+    public static TodoStatus fromBoolean(Boolean value) {
+        return value ? CHECKED : UNCHECKED;
+    }
 }

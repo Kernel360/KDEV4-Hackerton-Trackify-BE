@@ -6,6 +6,7 @@ import com.example.trackify.category.service.CategoryService;
 import com.example.trackify.todo.domain.Todo;
 import com.example.trackify.todo.domain.TodoStatus;
 import com.example.trackify.todo.repository.TodoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,14 +41,12 @@ public class TodoService {
         return todoRepository.save(savedTodo.get());
     }
     //Todo 상태 변경
-    public Todo updateTodoStatus(Long todoSequence, boolean todoStatus){
-        Optional<Todo> savedTodo = todoRepository.findById(todoSequence);
-        if(todoStatus){
-            savedTodo.get().setTodoCheck(TodoStatus.CHECKED);
-            return todoRepository.save(savedTodo.get());
-        }
-        savedTodo.get().setTodoCheck(TodoStatus.UNCHECKED);
-        return todoRepository.save(savedTodo.get());
+    public Todo updateTodoStatus(Long todoSequence, Boolean todoStatus){
+        Todo savedTodo = todoRepository.findById(todoSequence)
+                .orElseThrow(() -> new EntityNotFoundException("Todo not found with id: " + todoSequence));
+
+        savedTodo.setTodoCheck(TodoStatus.fromBoolean(todoStatus));
+        return todoRepository.save(savedTodo);
     }
     //Todo 삭제
     public void deleteTodo(Long todoSequence){
