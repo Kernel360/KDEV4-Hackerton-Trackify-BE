@@ -19,4 +19,9 @@ public class TestController {
         System.out.println(response);
         return response;
     }
+
+    @GetMapping("/test1")
+    public String test1() {
+        return "Hello World";
+    }
 }
