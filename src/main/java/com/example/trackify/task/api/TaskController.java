@@ -4,6 +4,9 @@ import com.example.trackify.task.domain.Task;
 import com.example.trackify.task.domain.TaskForm;
 import com.example.trackify.task.domain.TaskStatus;
 import com.example.trackify.task.service.TaskService;
+import com.example.trackify.user.domain.User;
+import com.example.trackify.user.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +26,17 @@ public class TaskController {
     //태스크 생성
     @PostMapping("/tasks/new")
     public ResponseEntity<Map<Long, String>> createTask(
-            @RequestBody TaskForm form
+            @RequestBody TaskForm form,
+            HttpSession session
     ) {
+        //User
+        User user = (User) session.getAttribute("user");
         //Task 엔티티 생성
         Task task = Task.builder()
                 .taskTitle(form.getTaskTitle())
                 .taskStartDate(form.getTaskStartDate())
                 .taskEndDate(form.getTaskEndDate())
+                .user(user)
                 .build();
 
         //Task 서비스에서 저장
@@ -52,7 +59,7 @@ public class TaskController {
     //태스크 상세 조회
     @GetMapping("/tasks/{task_sequence}")
     public ResponseEntity<Task> getDetailTask(
-            @PathVariable Long taskSequence
+            @PathVariable("task_sequence") Long taskSequence
     ) {
         Task res = taskService.findOne(taskSequence);
         return ResponseEntity.ok(res);
@@ -62,7 +69,7 @@ public class TaskController {
     @PatchMapping("/tasks/{task_sequence}/modify")
     public ResponseEntity<Map<String, String>> updateTask(
             @RequestBody TaskForm form,
-            @PathVariable Long taskSequence
+            @PathVariable("task_sequence") Long taskSequence
     ) {
         String taskTitle = form.getTaskTitle();
         LocalDate taskStartDate = form.getTaskStartDate();
@@ -78,10 +85,10 @@ public class TaskController {
     //태스크 상태 변경
     @PatchMapping("/tasks/status/{task_sequence}")
     public ResponseEntity<Map<String, String>> updateTaskStatus(
-            @RequestBody TaskStatus taskStatus,
-            @PathVariable Long taskSequence
+            @RequestBody Map<String, Integer> request,
+            @PathVariable("task_sequence") Long taskSequence
     ){
-        taskService.updateStatus(taskSequence, taskStatus.getValue());
+        taskService.updateStatus(taskSequence, request.get("taskStatus"));
 
         Map<String, String> res = new HashMap<>();
         res.put("message", "태스크 상태 변경 완료");
@@ -91,7 +98,7 @@ public class TaskController {
     //태스크 삭제
     @DeleteMapping("/tasks/{task_sequence}/delete")
     public ResponseEntity<Map<String, String>> deleteTask(
-            @PathVariable Long taskSequence
+            @PathVariable("task_sequence") Long taskSequence
     ) {
 
         taskService.delete(taskSequence);

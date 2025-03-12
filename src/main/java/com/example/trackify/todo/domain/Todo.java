@@ -1,6 +1,7 @@
 package com.example.trackify.todo.domain;
 
 import com.example.trackify.category.domain.Category;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,8 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long todoSequence;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "category_sequence")  // FK 설정
     private Category category;
 
