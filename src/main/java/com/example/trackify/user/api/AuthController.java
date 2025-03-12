@@ -29,7 +29,7 @@ public class AuthController {
         try {
             User user = userService.findByUserId(request.get("userId"), request.get("userPassword"));
 
-            session.setAttribute("userId", user.getUserId()); // 세션에 저장
+            session.setAttribute("user", user); // 세션에 저장
 
             response.put("message", "로그인 성공");
             response.put("userId", user.getUserId());
